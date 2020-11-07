@@ -1,0 +1,11 @@
+[package]
+name = "org2json"
+version = "0.1.0"
+authors = ["Stephen Heywood <stephen@heyste.nz>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+orgize = "0.8.4"
+serde_json = "1.0.59"
