@@ -1,0 +1,48 @@
+#+title: Org2JSON
+#+author: Stephen Heywood
+
+
+* Synopsis
+
+While [[https://orgmode.org/][Org mode]] and [[https://www.gnu.org/software/emacs/][Emacs]] are a great combination with a great ecosystem that can be extended in so many ways, there are times when it needs to interact with other systems.
+
+The goal of [[https://github.com/heyste/org2json][org2json]] is to build on top of the work done by [[https://github.com/PoiScript/orgize/blob/master/README.md][orgize]], a parsing library (with various [[https://github.com/PoiScript/orgize/tree/master/examples][examples]]), and provide an executable for generating json from any org file.
+
+* Using [[https://www.docker.com][Docker]]
+
+** Convert .org to .json
+
+The following command will map the current folder inside the docker container, process =README.org= and then save the json output as the file =README.json=. Also, it's going to delete the container when finished.
+
+#+begin_src bash
+docker run --rm -v $(pwd):/docs heyste/org2json /app/org2json /docs/README.org > README.json
+#+end_src
+
+** Using jq
+
+With other tools like [[https://stedolan.github.io/jq/][jq]] it's possible to explore the json structure of a document.
+
+#+begin_src bash :eval never-export :exports both
+docker run --rm -v $(pwd):/docs heyste/org2json /app/org2json /docs/README.org | jq .children[0]
+#+end_src
+
+#+RESULTS:
+#+begin_src bash
+{
+  "type": "section",
+  "children": [
+    {
+      "type": "keyword",
+      "key": "title",
+      "value": "Org2JSON",
+      "post_blank": 0
+    },
+    {
+      "type": "keyword",
+      "key": "author",
+      "value": "Stephen Heywood",
+      "post_blank": 2
+    }
+  ]
+}
+#+end_src
